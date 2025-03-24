@@ -18,3 +18,17 @@ Maximize revenue from direct marketing campaigns using the provided dummy data.
 - Create Analytical Datasets: Prepare train and test datasets using the provided data. 
 - Develop Propensity Models: Build three models to estimate the likelihood of purchase for: a. Consumer Loan b. Credit Card and c. Mutual Fund
 - Optimize Targeting Strategy: Select clients to target with marketing offers to maximize revenue, adhering to the constraints.
+
+## Approach Summary
+The process is comprised of three key steps: 1) Data Processing, 2) Model Training, and 3) Production Inference.
+- Data Processing : The data is merged from multiple Excel sheets into a single Pandas DataFrame using the client ID. Missing values in "count" and "revenue" are filled with zeros, and missing values in "Sex" are imputed with the mode and converted to binary. Clients with no transaction data are excluded. High correlation between "Current Account (XX_CA)" features leads to their removal. The "Sales_Revenues" sheet is merged, with 10% reserved for testing. Data is split for classification and regression tasks. StandardScaler() is used for feature standardization, RFE for feature selection, and PCA reduces dimensionality. The processed data is saved for further use.
+- Model Training : For this task, I will train six models—three classification models and three regression models. The classification models will determine whether a client should be selected for the campaign for a specific product, while the regression models will predict the potential revenue generated from each client.
+- Production Inference : For production inference, all necessary metadata, including PCA components, scalers, selected features, and trained models, will be used. The entire dataset is loaded from an Excel file, and a data processing pipeline handles standardization, feature selection, and PCA. Processed data is passed through prediction pipelines for both classification (to identify campaign targets) and regression (to predict revenue). Only revenue for selected clients is considered, with product categories (CL, CC, MF) added. The top 100 clients by revenue per product are selected for the campaign, and final revenue predictions are made. 
+
+## File Details
+- Data Processing: DataProcessing.ipynb  
+- Model Training: ModelsTraining.ipynb  
+- Production Inference: ProductionInference.ipynb  
+- Final Result: 'prediction_result' folder.
+- Report: TechnicalReport.pdf
+  
